@@ -37,5 +37,24 @@ public class JabatanController {
         return "view_jabatan";
     }
 
+    /*
+    Fitur 7 - Mengubah Data Jabatan
+     */
+    @GetMapping(value = "/jabatan/ubah")
+    private String update (@RequestParam("idJabatan") long idJabatan, Model model){
+        JabatanModel jabatan = jabatanService.findJabatanById(idJabatan);
+        model.addAttribute("jabatan", jabatan);
+        return "change_jabatan";
+    }
+
+    @PostMapping(value = "/jabatan/ubah")
+    private String change(@RequestParam ("idJabatan") long id,
+                          @RequestParam ("nama") String nama,
+                          @RequestParam ("deskripsi") String deskripsi,
+                          @RequestParam ("gajiPokok") Double gajiPokok){
+        JabatanModel beforeChangedJabatanModel = jabatanService.findJabatanById(id);
+        jabatanService.changeJabatan(beforeChangedJabatanModel, nama, deskripsi, gajiPokok);
+        return "change_jabatan_response";
+    }
 
 }

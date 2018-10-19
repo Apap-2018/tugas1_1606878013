@@ -22,4 +22,12 @@ public class JabatanServiceImpl implements JabatanService {
     public JabatanModel findJabatanById(long id){
         return jabatanDb.getOne(id);
     }
+
+    @Override
+    public void changeJabatan (JabatanModel beforeChangedModel, String nama, String deskripsi, Double gajiPokok) {
+        beforeChangedModel.setNama(nama);
+        beforeChangedModel.setDeskripsi(deskripsi);
+        beforeChangedModel.setGajiPokok(gajiPokok);
+        jabatanDb.save(beforeChangedModel);
+    }
 }
