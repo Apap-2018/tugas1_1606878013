@@ -14,7 +14,7 @@ public class PegawaiServiceImpl implements PegawaiService{
     private PegawaiDb pegawaiDb;
 
     @Override
-    public PegawaiModel getPegawaiByNip(String nip){
+    public PegawaiModel findPegawaiByNip(String nip){
         return pegawaiDb.findByNip(nip);
     }
     @Override
