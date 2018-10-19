@@ -13,21 +13,20 @@ import java.io.Serializable;
 public class JabatanPegawaiModel implements Serializable {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    @Size(max = 20)
     private long id;
 
-    @ManyToOne
+    /*@OneToMany
     @JoinColumn(name = "pegawai_id", referencedColumnName = "id", nullable = false)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JsonIgnore
     private long idPegawai;
 
-    @ManyToOne
+    @OneToMany
     @JoinColumn(name = "jabatan_id", referencedColumnName = "id", nullable = false)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JsonIgnore
     private long idJabatan;
-
+*/
     public long getId() {
         return id;
     }
@@ -36,7 +35,7 @@ public class JabatanPegawaiModel implements Serializable {
         this.id = id;
     }
 
-    public long getIdPegawai() {
+    /*public long getIdPegawai() {
         return idPegawai;
     }
 
@@ -50,5 +49,5 @@ public class JabatanPegawaiModel implements Serializable {
 
     public void setIdJabatan(long idJabatan) {
         this.idJabatan = idJabatan;
-    }
+    }*/
 }

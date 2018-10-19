@@ -10,7 +10,6 @@ import java.io.Serializable;
 public class ProvinsiModel implements Serializable {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    @Size(max = 10)
     private long id;
 
     @NotNull

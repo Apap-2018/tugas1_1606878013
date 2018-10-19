@@ -10,12 +10,11 @@ import java.io.Serializable;
 public class JabatanModel implements Serializable {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    @Size(max = 20)
     private long id;
 
     @NotNull
     @Size(max = 255)
-    @Column(name = "jabatan", nullable = false)
+    @Column(name = "nama", nullable = false)
     private String nama;
 
     @NotNull

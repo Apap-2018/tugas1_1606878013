@@ -14,7 +14,6 @@ import java.io.Serializable;
 public class InstansiModel implements Serializable {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    @Size(max = 20)
     private long id;
 
     @NotNull
@@ -27,11 +26,19 @@ public class InstansiModel implements Serializable {
     @Column(name = "deskripsi", nullable = false)
     private String deskripsi;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "provinsi_id", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_provinsi", referencedColumnName = "id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JsonIgnore
-    private long idProvinsi;
+    private ProvinsiModel provinsi;
+
+    public ProvinsiModel getProvinsi() {
+        return provinsi;
+    }
+
+    public void setProvinsi(ProvinsiModel provinsi) {
+        this.provinsi = provinsi;
+    }
 
     public long getId() {
         return id;
@@ -55,13 +62,5 @@ public class InstansiModel implements Serializable {
 
     public void setDeskripsi(String deskripsi) {
         this.deskripsi = deskripsi;
-    }
-
-    public long getIdProvinsi() {
-        return idProvinsi;
-    }
-
-    public void setIdProvinsi(long idProvinsi) {
-        this.idProvinsi = idProvinsi;
     }
 }
