@@ -57,4 +57,15 @@ public class JabatanController {
         return "change_jabatan_response";
     }
 
+    /*
+    Fitur 8 - Menghapus Data Jabatan
+     */
+    @PostMapping(value = "/jabatan/hapus/{idJabatan}")
+    private String delete (@PathVariable(value = "idJabatan") long id) {
+        JabatanModel jabatan = jabatanService.findJabatanById(id);
+        System.out.println(jabatan.getId());
+        System.out.println(jabatan.getNama());
+        jabatanService.deleteJabatan(jabatan);
+        return "delete_jabatan_response";
+    }
 }

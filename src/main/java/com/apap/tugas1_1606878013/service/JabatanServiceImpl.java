@@ -30,4 +30,9 @@ public class JabatanServiceImpl implements JabatanService {
         beforeChangedModel.setGajiPokok(gajiPokok);
         jabatanDb.save(beforeChangedModel);
     }
+
+    @Override
+    public void deleteJabatan (JabatanModel jabatan) {
+        jabatanDb.delete(jabatan);
+    }
 }

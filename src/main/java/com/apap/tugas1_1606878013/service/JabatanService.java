@@ -6,4 +6,5 @@ public interface JabatanService {
     void addJabatan(JabatanModel jabatan);
     JabatanModel findJabatanById(long id);
     void changeJabatan(JabatanModel beforeChangedModel, String nama, String deskripsi, Double gajiPokok);
+    void deleteJabatan(JabatanModel jabatan);
 }
