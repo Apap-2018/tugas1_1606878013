@@ -1,16 +1,22 @@
 package com.apap.tugas1_1606878013.controller;
 
 import com.apap.tugas1_1606878013.model.JabatanModel;
+import com.apap.tugas1_1606878013.repository.JabatanDb;
 import com.apap.tugas1_1606878013.service.JabatanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 public class JabatanController {
     @Autowired
     private JabatanService jabatanService;
+
+    @Autowired
+    private JabatanDb jabatanDb;
 
     /*
     Fitur 5 - Menambahkan Jabatan Baru
@@ -67,5 +73,15 @@ public class JabatanController {
         System.out.println(jabatan.getNama());
         jabatanService.deleteJabatan(jabatan);
         return "delete_jabatan_response";
+    }
+
+    /*
+    Fitur 9 - Menampilkan Data Jabatan
+     */
+    @GetMapping(value = "/jabatan/viewall")
+    private String viewAll(Model model) {
+        List<JabatanModel> allJabatan = jabatanDb.findAll();
+        model.addAttribute("allJabatan", allJabatan);
+        return "view_all_jabatan";
     }
 }
