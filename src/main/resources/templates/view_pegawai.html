@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <title>View Pilot</title>
+    </head>
+
+    <body>
+        <h3 th:text = "'Lihat Data Pegawai - ' + ${pegawai.nip}"></h3>
+        <p th:text = "'NIP : ' + ${pegawai.nip}"></p>
+        <p th:text = "'Nama : ' + ${pegawai.nama}"></p>
+        <p th:text = "'Tempat Lahir : ' + ${pegawai.tempatLahir}"></p>
+        <p th:text = "'Tanggal Lahir : ' + ${pegawai.tanggalLahir}"></p>
+        <p th:text = "'Tahun Masuk : ' + ${pegawai.tahunMasuk}"></p>
+        <p th:text = "'Instansi : ' + ${instansiPegawai.nama} + ' - ' + ${instansiPegawai.getProvinsi().nama}"></p>
+        <p th:text = "'Jabatan : '"></p>
+        <option th:each = "jabatan : ${jabatanPegawai}">
+          <p th:text = "${jabatan.nama}"></p>
+        </option>
+        <p th:text = "'Gaji Pokok : ' + ${gajiPokok}"></p>
+    </body>
+
+</html>

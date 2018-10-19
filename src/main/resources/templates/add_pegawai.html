@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <title> Add Pegawai </title>
+    </head>
+
+    <body>
+        <form th:action = "@{/pegawai/tambah/submit}" method="get">
+            Nama : <br/>
+            <input type="text" name="nama"/>
+            <br/>
+            Tempat Lahir : <br/>
+            <input type="text" name="tempat_lahir"/>
+            <br/>
+            Tanggal Lahir : <br/>
+            <input type="date" name="tanggal_lahir"/>
+            <br/>
+            Tahun Masuk : <br/>
+            <input type="text" name="tahun_masuk"/>
+            <br/>
+
+            <div>
+                <select th:name = "provinsi" th:onblur="'selectInstansi(this.value)'">
+                    <option th:each = "provinsi : ${allProvinsi}" th:value="${provinsi.id}" th:text="${provinsi.nama}"></option>
+                </select>
+            </div>
+
+            <div>
+                <select th:name = "instansi" id="idInstansi">
+                    <option th:each = "instansi : ${allInstansi}" th:value="${instansi.id}" th:text="${instansi.nama}"></option>
+                </select>
+            </div>
+
+            <select name = "jabatan" id="jabatan">
+                <option th:each = "jabatan : ${allJabatan}" th:value = "${jabatan.id}" th:text = "${jabatan.nama}"></option>
+            </select>
+
+            <button type="submit">Simpan</button>
+        </form>
+    </body>
+
+    <!--<script type="text/javascript" th:inline = "javascript">
+        var allProvinsi = [[${allProvinsi}]];
+        var allInstansi = [[${allInstansi}]];
+
+        function selectInstansi(idProvinsi) {
+            var result = '';
+            for (var i in allInstansi) {
+                var id = allInstansi[i].getId();
+                var name = allInstansi[i].getNama();
+                if (allInstansi[i].getProvinsi().getId() == idProvinsi) {
+                    result += '<option th:value =' + id + 'th:text =' + name + '> </option>'
+                }
+            }
+            document.getElementById("idInstansi").innerHTML = result;
+        }
+    </script>-->
+</html>

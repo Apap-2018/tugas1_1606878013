@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <title>Home</title>
+
+        <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+        <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    </head>
+
+    <body>
+        <form th:action = "@{/pegawai}"  method="get">
+            <label for = "nip"> Nomor Induk Pegawai </label>
+            <input id="nip" type="text" name="nip" />
+            <button type="submit">Lihat</button>
+        </form>
+
+        <br/>
+
+        <form th:action = "@{/jabatan/view}" method="get">
+            <select th:name = "idJabatan">
+                <!--<option disabled="disabled" selected="selected"> Pilih Jabatan... </option>-->
+                <option th:each = "jabatan : ${allJabatan}" th:value="${jabatan.id}" th:text="${jabatan.nama}"></option>
+            </select>
+            <br>
+            <button type="submit">Lihat</button>
+        </form>
+    </body>

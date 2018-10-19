@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>View Jabatan</title>
+    </head>
+
+    <body>
+        <h3 th:text = "'Detail Jabatan ' + ${jabatan.nama}"></h3>
+        <p th:text = "'Nama : ' + ${jabatan.nama}"></p>
+        <p th:text = "'Deskripsi : ' + ${jabatan.deskripsi}"></p>
+        <p th:text = "'Gaji Pokok : Rp ' + ${jabatan.gajiPokok}"></p>
+
+        <form th:action = "@{/jabatan/ubah}" method="get">
+            <input type="hidden" name="idJabatan" th:value="${jabatan.id}">
+            <button type="submit">Ubah</button>
+        </form>
+
+        <form th:action = "@{|/jabatan/hapus/${jabatan.id}|}" method="post">
+            <button type="submit">Hapus</button>
+        </form>
+    </body>
+</html>
