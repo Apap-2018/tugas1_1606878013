@@ -55,9 +55,9 @@
                         </div>
                         <div class="card-body">
                             <h5 class="card-title">Pilih Instansi</h5>
-                            <form th:action = "@{/}" method="get">
+                            <form th:action = "@{/pegawai/termuda-tertua}" method="get">
                                 <select class="form-control" th:name = "idInstansi">
-
+                                    <option th:each="instansi : ${allInstansi}" th:value="${instansi.id}" th:text="${instansi.nama} + ' - ' + ${instansi.provinsi.nama}"></option>
                                 </select>
                                 <button type="submit" class="btn btn-primary">Lihat</button>
                             </form>
