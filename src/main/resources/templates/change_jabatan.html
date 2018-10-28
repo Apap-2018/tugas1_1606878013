@@ -2,9 +2,48 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Update Jabatan</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: style" th:remove="tag"></object>
+
 </head>
 <body>
-<form th:action = "@{/jabatan/ubah}" th:object = "${updatedJabatan}" method="POST">
+    <nav th:replace = "fragments/fragment :: navbar"></nav>
+
+    <div class="container-fluid">
+        <h4 class = "title">Update Jabatan</h4>
+        <hr/>
+
+        <div class="row" style="margin: 30px; padding: 12px" >
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <form th:action = "@{/jabatan/ubah}" th:object = "${updatedJabatan}" method="POST">
+                    <input type="hidden" name="idJabatan" th:value="${jabatan.id}">
+                    <div class = "input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" style="width: 110px;">Nama</span>
+                        </div>
+                        <input type="text" name="nama" style="width: 300px;" th:value = "${jabatan.nama}">
+                    </div>
+                    <div class = "input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" style="width: 110px;">Deskripsi</span>
+                        </div>
+                        <input name="deskripsi" style="width: 300px;" th:value="${jabatan.deskripsi}">
+                    </div>
+                    <div class = "input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" style="width: 110px;">Gaji Pokok</span>
+                        </div>
+                        <input type="number" name="gajiPokok" style="width: 300px;" th:value="${jabatan.gajiPokok}">
+                    </div>
+                    <button style="margin: auto;" type="submit" class="btn btn-primary">Simpan</button>
+                </form>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+    </div>
+<!--<form th:action = "@{/jabatan/ubah}" th:object = "${updatedJabatan}" method="POST">
     <input type="hidden" name="idJabatan" th:value="${jabatan.id}"
     Nama : <br/>
     <input type="text" name="nama" th:value="${jabatan.nama}"/>
@@ -16,6 +55,6 @@
     <input type="number" name="gajiPokok" th:value="${jabatan.gajiPokok}"/>
     <br/>
     <button type="submit">Simpan</button>
-</form>
+</form>-->
 </body>
 </html>
