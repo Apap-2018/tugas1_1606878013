@@ -1,10 +1,51 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
     <head>
+
         <title>Add Jabatan</title>
+        <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+        <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+        <object th:include="fragments/fragment :: style" th:remove="tag"></object>
+
     </head>
+
     <body>
-    <form th:action = "@{/jabatan/tambah}" th:object = "${newJabatan}" method="post">
+    <nav th:replace = "fragments/fragment :: navbar"></nav>
+
+    <div class="container-fluid">
+        <h4 class = "title">Tambah Jabatan</h4>
+        <hr/>
+
+        <div class="row" style="margin: 30px; padding: 12px" >
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+            <form th:action = "@{/jabatan/tambah}" th:object = "${newJabatan}" method="post">
+                <div class = "input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" style="width: 110px;">Nama</span>
+                    </div>
+                    <input type="text" name="nama" style="width: 300px;">
+                </div>
+                <div class = "input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" style="width: 110px;">Deskripsi</span>
+                    </div>
+                    <input rows="3" name="deskripsi" style="width: 300px;">
+                </div>
+                <div class = "input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" style="width: 110px;">Gaji Pokok</span>
+                    </div>
+                    <input type="number" name="gajiPokok" style="width: 300px;">
+                </div>
+                <button style="margin: auto;" type="submit" class="btn btn-primary">Simpan</button>
+            </form>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+    </div>
+
+<!--
         Nama : <br/>
         <input type="text" name="nama"/>
         <br/>
@@ -14,7 +55,6 @@
         Gaji Pokok : <br/>
         <input type="number" name="gajiPokok"/>
         <br/>
-        <button type="submit">Simpan</button>
-    </form>
+        <button type="submit">Simpan</button>-->
     </body>
 </html>
