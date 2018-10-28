@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table (name = "instansi")
@@ -31,6 +32,17 @@ public class InstansiModel implements Serializable {
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JsonIgnore
     private ProvinsiModel provinsi;
+
+    @OneToMany(mappedBy = "instansi", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<PegawaiModel> pegawai;
+
+    public List<PegawaiModel> getPegawai() {
+        return pegawai;
+    }
+
+    public void setPegawai(List<PegawaiModel> newList) {
+        this.pegawai = pegawai;
+    }
 
     public ProvinsiModel getProvinsi() {
         return provinsi;
