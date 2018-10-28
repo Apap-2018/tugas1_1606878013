@@ -1,0 +1,17 @@
+.title {
+    text-align: center;
+    margin: 12px;
+}
+
+select {
+    text-align: center;
+}
+
+button {
+    margin: 10px;
+}
+
+.form-add {
+    position: relative;
+    margin: auto;
+}
