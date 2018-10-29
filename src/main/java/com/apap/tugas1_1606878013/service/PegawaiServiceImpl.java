@@ -21,4 +21,6 @@ public class PegawaiServiceImpl implements PegawaiService{
     public void addPegawai(PegawaiModel pegawai) {
         pegawaiDb.save(pegawai);
     }
+    @Override
+    public void updatePegawai(PegawaiModel pegawai) { pegawaiDb.save(pegawai);}
 }

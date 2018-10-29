@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <title> Add Pegawai </title>
+        <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+        <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+        <object th:include="fragments/fragment :: style" th:remove="tag"></object>
+        <object th:include="fragments/fragment :: ajax_dynamic_dropdown" th:remove="tag"></object>
+    </head>
+
+    <body>
+        <nav th:replace = "fragments/fragment :: navbar"></nav>
+        <div class="container">
+            <h4 class = "title">Ubah Pegawai</h4>
+            <hr/>
+
+            <div class="row" style="margin: 30px; padding: 12px">
+                <div class="col-lg-4"></div>
+                <div class="col-lg-8">
+                    <form th:action = "@{/pegawai/ubah}" th:object="${updatedPegawai}" method="POST">
+                        <input type="hidden" name="id" th:value="${pegawai.id}">
+                        <div class = "input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" style="width: 150px;">Nama</span>
+                            </div>
+                            <input type="text" name="nama" style="width: 300px;" th:value="${pegawai.nama}">
+                        </div>
+                        <div class = "input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" style="width: 150px;">Tempat Lahir</span>
+                            </div>
+                            <input type="text" name="tempatLahir" style="width: 300px;" th:value="${pegawai.tempatLahir}">
+                        </div>
+                        <div class = "input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" style="width: 150px;">Tanggal Lahir</span>
+                            </div>
+                            <input type="date" name="tanggalLahir" style="width: 300px;" th:value="${pegawai.tanggalLahir}">
+                        </div>
+                        <div class = "input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" style="width: 150px;">Tahun Masuk</span>
+                            </div>
+                            <input type="text" name="tahunMasuk" style="width: 300px;" th:value="${pegawai.tahunMasuk}">
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" style="width: 150px;">Provinsi</span>
+                            </div>
+                            <select id="provinsi" th:name = "provinsi" style="width: 300px;">
+                                <div th:each="provinsi: ${allProvinsi}">
+                                    <option th:selected="true" th:if="${provinsiInstansiPegawai.id == provinsi.id}" th:text="${provinsi.nama}" th:value="${provinsi.id}"></option>
+                                    <option th:if="${provinsiInstansiPegawai.id != provinsi.id}" th:text="${provinsi.nama}" th:value="${provinsi.id}"></option>
+                                </div>
+                            </select>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" style="width: 150px;">Instansi</span>
+                            </div>
+
+                            <select id="instansi" th:name = "instansi" style="width:300px;">
+                                <div th:each="instansi: ${daftarSeluruhInstansiDiProvinsiPegawai}">
+                                    <option th:selected="true" th:if="${instansiPegawai.id == instansi.id}" th:text="${instansi.nama}" th:value="${instansi.id}"></option>
+                                    <option th:if="${instansiPegawai.id != instansi.id}" th:text="${instansi.nama}" th:value="${instansi.id}"></option>
+                                </div>
+                            </select>
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" style="width: 150px;">Jabatan</span>
+                            </div>
+                            <select id="jabatan" th:name = "jabatanPegawai" style="width:300px;">
+                                <div th:each="jabatan: ${allJabatan}">
+                                    <option th:selected="true" th:if="${jabatanPegawai.id == jabatan.id}" th:text="${jabatan.nama}" th:value="${jabatan.id}"></option>
+                                    <option th:if="${jabatanPegawai.id != jabatan.id}" th:text="${jabatan.nama}" th:value="${jabatan.id}"></option>
+                                </div>
+                            </select>
+                        </div>
+                        <!--<div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" style="width: 150px;">Instansi</span>
+                            </div>
+                            <select id="instansi" th:name = "instansi" style="width: 300px;" th:value="${pegawai.instansi.nama}">
+                                <option th:each = "instansi: ${allInstansi}" th:value = "${instansi.id}" th:text="${instansi.nama}"></option>
+                            </select>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" style="width: 150px;">Jabatan</span>
+                            </div>
+                            <select id="jabatan" th:name = "jabatanPegawai" th:field="*{jabatanPegawai[0]}" style="width: 300px;" th:value="${pegawai.jabatanPegawai[0]}">
+                                <option th:each = "jabatan: ${allJabatan}"  th:value = "${jabatan.id}" th:text="${jabatan.nama}"></option>
+                            </select>
+                        </div>-->
+                        <button class="btn btn-primary" type="submit">Simpan</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+
+    <script type="text/javascript" th:inline = "javascript">
+        var allProvinsi = [[${allProvinsi}]];
+        var allInstansi = [[${allInstansi}]];
+
+        $(document).ready(function(){
+            $('#provinsi').on('blur', function()  {
+                var selectedProvinsi = $(this).val();
+                var result = '';
+
+                jQuery.each( allInstansi, function( i, val ) {
+                    if (val.provinsi.id == selectedProvinsi) {
+                        result += '<option value=' + val.id + '>' + val.nama + '</option>'
+                    }
+                });
+
+                $('#instansi').html(result);
+            })
+        })
+    </script>
+</html>

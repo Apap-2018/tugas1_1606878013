@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Pegawai Tertua dan Termuda</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: style" th:remove="tag"></object>
+</head>
+
+<body>
+    <nav th:replace = "fragments/fragment :: navbar"></nav>
+    <div th:if="!${message} == ''">
+        <h4 th:text="${message}"></h4>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <h4 style="margin: 10px 30px;" >Data Pegawai Termuda</h4>
+            <hr>
+            <div class="row" style="margin: 15px;">
+                <div class="col-md-3">
+                    <h5 th:text="'NIP'"></h5>
+                    <h5 th:text="'Nama'"></h5>
+                    <h5 th:text="'Tempat Lahir'"></h5>
+                    <h5 th:text="'Tanggal Lahir'"></h5>
+                    <h5 th:text="'Tahun Masuk'"></h5>
+                    <h5 th:text="'Nama Instansi'"></h5>
+                    <h5 th:text="'Jabatan'"></h5>
+                </div>
+                <div class="col-md-9">
+                    <h5 th:text="${pegawaiTermuda.nip}"></h5>
+                    <h5 th:text="${pegawaiTermuda.nama}"></h5>
+                    <h5 th:text="${pegawaiTermuda.tempatLahir}"></h5>
+                    <h5 th:text="${pegawaiTermuda.tanggalLahir}"></h5>
+                    <h5 th:text="${pegawaiTermuda.tahunMasuk}"></h5>
+                    <h5 th:text="${pegawaiTermuda.instansi.nama} + ' - ' + ${pegawaiTermuda.instansi.provinsi.nama}"></h5>
+                    <ul th:each = "jabatan : ${pegawaiTermuda.jabatanPegawai}">
+                        <h5><li th:text = "${jabatan.nama}"></li></h5>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <h4 style="margin: 10px 30px;">Data Pegawai Tertua</h4>
+            <hr>
+            <div class="row" style="margin: 15px;">
+                <div class="col-md-3">
+                    <h5 th:text="'NIP'"></h5>
+                    <h5 th:text="'Nama'"></h5>
+                    <h5 th:text="'Tempat Lahir'"></h5>
+                    <h5 th:text="'Tanggal Lahir'"></h5>
+                    <h5 th:text="'Tahun Masuk'"></h5>
+                    <h5 th:text="'Nama Instansi'"></h5>
+                    <h5 th:text="'Jabatan'"></h5>
+                </div>
+                <div class="col-md-9">
+                    <h5 th:text="${pegawaiTertua.nip}"></h5>
+                    <h5 th:text="${pegawaiTertua.nama}"></h5>
+                    <h5 th:text="${pegawaiTertua.tempatLahir}"></h5>
+                    <h5 th:text="${pegawaiTertua.tanggalLahir}"></h5>
+                    <h5 th:text="${pegawaiTertua.tahunMasuk}"></h5>
+                    <h5 th:text="${pegawaiTertua.instansi.nama} + ' - ' + ${pegawaiTertua.instansi.provinsi.nama}"></h5>
+                    <ul th:each = "jabatan : ${pegawaiTertua.jabatanPegawai}">
+                        <h5><li th:text = "${jabatan.nama}"></li></h5>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

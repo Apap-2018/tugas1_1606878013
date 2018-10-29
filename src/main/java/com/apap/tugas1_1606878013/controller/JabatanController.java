@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 @Controller
@@ -39,7 +40,12 @@ public class JabatanController {
     @GetMapping(value = "/jabatan/view")
     private String view (@RequestParam("idJabatan") long idJabatan, Model model) {
         JabatanModel jabatan = jabatanService.findJabatanById(idJabatan);
+        int jumlahPegawai = jabatan.getPegawai().size();
         model.addAttribute("jabatan", jabatan);
+        model.addAttribute("jumlahPegawai", jumlahPegawai);
+
+        DecimalFormat df = new DecimalFormat("#,###");
+        model.addAttribute("gaji", df.format(jabatan.getGajiPokok()));
         return "view_jabatan";
     }
 

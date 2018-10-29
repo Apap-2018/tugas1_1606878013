@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.DecimalFormat;
 import java.util.*;
 
 @Controller
@@ -58,7 +59,8 @@ public class PegawaiController {
         model.addAttribute("pegawai", pegawai);
         model.addAttribute("instansiPegawai", instansiPegawai);
         model.addAttribute("jabatanPegawai", jabatanPegawai);
-        model.addAttribute("gajiPokok", gajiPokokTerbesar);
+        DecimalFormat df = new DecimalFormat("#,###");
+        model.addAttribute("gajiPokok", df.format(gajiPokokTerbesar));
         return "view_pegawai";
     }
 
@@ -98,12 +100,24 @@ public class PegawaiController {
             tanggal = "0" + tempTanggal;
         }
 
+        System.out.println(tanggal);
+
         int bulan = pegawai.getTanggalLahir().getMonth() + 1;
+
+        System.out.println(bulan);
+
         int tahun = pegawai.getTanggalLahir().getYear();
+
+        System.out.println(tahun);
+
 //        String tahun = (tempTahun + "").substring(2,4);
 
         long kodeInstansi = pegawai.getInstansi().getId();
+        System.out.println(kodeInstansi);
+
         String tahunMasuk = pegawai.getTahunMasuk();
+        System.out.println(tahunMasuk);
+
         List<PegawaiModel> seluruhPegawai = pegawaiDb.findByTahunMasukAndTanggalLahir(pegawai.getTahunMasuk(), pegawai.getTanggalLahir());
 
 
@@ -157,6 +171,137 @@ public class PegawaiController {
         return "add_pegawai_response";
     }
 
+    @GetMapping (value = "pegawai/ubah")
+    private String update (@RequestParam("nip") String nip, Model model){
+        PegawaiModel pegawai = pegawaiService.findPegawaiByNip(nip);
+        model.addAttribute("pegawai", pegawai);
+
+        List<ProvinsiModel> daftarProvinsi = provinsiDb.findAll();
+        List<InstansiModel> daftarInstansi = instansiDb.findAll();
+        List<JabatanModel> daftarJabatan = jabatanDb.findAll();
+
+        InstansiModel instansiPegawaiSaatIni = pegawai.getInstansi();
+        ProvinsiModel provinsiPegawaiSaatIni = pegawai.getInstansi().getProvinsi();
+
+
+        List<InstansiModel> daftarSeluruhInstansiDiProvinsiPegawaiSaatIni = new ArrayList<InstansiModel>();
+        for (InstansiModel e : daftarInstansi){
+            if (e.getProvinsi().getId() == provinsiPegawaiSaatIni.getId()){
+                daftarSeluruhInstansiDiProvinsiPegawaiSaatIni.add(e);
+            }
+        }
+
+        JabatanModel jabatanPegawaiSaatIni = pegawai.getJabatanPegawai().get(0);
+
+        model.addAttribute("instansiPegawai", instansiPegawaiSaatIni);
+        model.addAttribute("provinsiInstansiPegawai", provinsiPegawaiSaatIni);
+        model.addAttribute("daftarSeluruhInstansiDiProvinsiPegawai", daftarSeluruhInstansiDiProvinsiPegawaiSaatIni);
+        model.addAttribute("jabatanPegawai", jabatanPegawaiSaatIni);
+        model.addAttribute("allProvinsi", daftarProvinsi);
+        model.addAttribute("allJabatan", daftarJabatan);
+
+        return "change_pegawai";
+    }
+
+    @PostMapping (value = "pegawai/ubah")
+    private String change(@ModelAttribute PegawaiModel updatedPegawai, Model model){
+        System.out.println(updatedPegawai.getId());
+        System.out.println(updatedPegawai.getNip());
+        System.out.println(updatedPegawai.getJabatanPegawai());
+        System.out.println(updatedPegawai.getInstansi());
+        System.out.println(updatedPegawai.getTempatLahir());
+        System.out.println(updatedPegawai.getTanggalLahir());
+        System.out.println(updatedPegawai.getTahunMasuk());
+        System.out.println(updatedPegawai.getNama());
+        int tempTanggal = updatedPegawai.getTanggalLahir().getDate();
+        String tanggal = "";
+        if ((tempTanggal + "").length() == 1){
+            tanggal = "0" + tempTanggal;
+        }
+
+        System.out.println(tanggal);
+
+        int bulan = updatedPegawai.getTanggalLahir().getMonth() + 1;
+
+        System.out.println(bulan);
+
+        int tahun = updatedPegawai.getTanggalLahir().getYear();
+
+        System.out.println(tahun);
+
+//        String tahun = (tempTahun + "").substring(2,4);
+
+        long kodeInstansi = updatedPegawai.getInstansi().getId();
+        System.out.println(kodeInstansi);
+
+        String tahunMasuk = updatedPegawai.getTahunMasuk();
+        System.out.println(tahunMasuk);
+
+        List<PegawaiModel> seluruhPegawai = pegawaiDb.findByTahunMasukAndTanggalLahir(updatedPegawai.getTahunMasuk(), updatedPegawai.getTanggalLahir());
+
+
+        for (int i  =  0 ;  i < seluruhPegawai.size() ; i++){
+            System.out.println(seluruhPegawai.get(i).getNip());
+        }
+
+
+        Collections.sort(seluruhPegawai, new Comparator<PegawaiModel>() {
+            @Override
+            public int compare(PegawaiModel o1, PegawaiModel o2) {
+                long p1 = o1.getId();
+                long p2 = o2.getId();
+
+                if (p1 > p2) {
+                    return 1;
+                } else if (p1 < p2){
+                    return -1;
+                } else {
+                    return 0;
+                }
+            }
+        });
+
+
+        String duaDigitTerakhir = "";
+        if (seluruhPegawai.size() == 0){
+            duaDigitTerakhir += "01";
+        }
+        else {
+            int tempNIPterakhir = Integer.parseInt(seluruhPegawai.get(seluruhPegawai.size()-1).getNip().substring(14,16));
+            tempNIPterakhir += 1;
+            if ((tempNIPterakhir + "").length() == 1){
+                duaDigitTerakhir += "0";
+            }
+            duaDigitTerakhir += tempNIPterakhir;
+        }
+//        int tempDuaDigitTerakhir = Integer.parseInt((seluruhPegawai.get((seluruhPegawai.size()-1)).getNip()));
+
+
+        /*tempDuaDigitTerakhir += 1;
+        if ((tempDuaDigitTerakhir+"").length() == 0){
+            duaDigitTerakhir += "0" + tempDuaDigitTerakhir;
+        }
+        else {
+            duaDigitTerakhir += tempDuaDigitTerakhir;
+        }*/
+        String nip = kodeInstansi + tanggal + bulan + tahun + tahunMasuk + duaDigitTerakhir;
+        updatedPegawai.setNip(nip);
+
+        PegawaiModel changingPegawai = pegawaiDb.getOne(updatedPegawai.getId());
+        changingPegawai.setNip(updatedPegawai.getNip());
+        changingPegawai.setJabatanPegawai(updatedPegawai.getJabatanPegawai());
+        changingPegawai.setInstansi(updatedPegawai.getInstansi());
+        changingPegawai.setTahunMasuk(updatedPegawai.getTahunMasuk());
+        changingPegawai.setTanggalLahir(updatedPegawai.getTanggalLahir());
+        changingPegawai.setTempatLahir(updatedPegawai.getTempatLahir());
+        changingPegawai.setNama(updatedPegawai.getNama());
+        pegawaiService.updatePegawai(changingPegawai);
+
+        return "change_pegawai_response";
+    }
+
+
+
     @GetMapping (value = "pegawai/termuda-tertua")
     private String seeOldestYoungestPegawai(@RequestParam("idInstansi") long idInstansi, Model model){
         InstansiModel instansiModel = instansiDb.getOne(idInstansi);
@@ -189,6 +334,19 @@ public class PegawaiController {
             model.addAttribute("pegawaiTertua", pegawaiTertua);
             return "oldest_youngest_pegawai";
         }
-
     }
+
+    @GetMapping (value = "pegawai/cari")
+    private String search(Model model){
+        model.addAttribute("allPegawai", pegawaiDb.findAll());
+        model.addAttribute("allInstansi", instansiDb.findAll());
+        model.addAttribute("allProvinsi", provinsiDb.findAll());
+        model.addAttribute("allJabatan", jabatanDb.findAll());
+        return "search_pegawai";
+    }
+
+    /*@PostMapping
+//    @GetMapping(value = "pegawai/ubah")
+//    private String updatePegawai ()
+*/
 }

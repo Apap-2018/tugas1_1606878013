@@ -8,8 +8,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.Date;
+import java.util.Comparator;
 import java.util.List;
+import java.sql.Date;
 
 @Entity
 @Table(name = "pegawai")
@@ -35,7 +36,7 @@ public class PegawaiModel implements Serializable {
 
     @NotNull
     @Column(name = "tanggal_lahir", nullable = false)
-    private Date tanggalLahir;
+    private java.sql.Date tanggalLahir;
 
     @NotNull
     @Size(max = 255)
@@ -85,11 +86,11 @@ public class PegawaiModel implements Serializable {
         this.tempatLahir = tempatLahir;
     }
 
-    public Date getTanggalLahir() {
+    public java.sql.Date getTanggalLahir() {
         return tanggalLahir;
     }
 
-    public void setTanggalLahir(Date tanggalLahir) {
+    public void setTanggalLahir(java.sql.Date tanggalLahir) {
         this.tanggalLahir = tanggalLahir;
     }
 
@@ -113,6 +114,10 @@ public class PegawaiModel implements Serializable {
         return jabatanPegawai;
     }
 
+    public void addJabatan(JabatanModel jabatanModel){
+        jabatanPegawai.add(jabatanModel);
+    }
+
     public void setJabatanPegawai(List<JabatanModel> jabatanPegawai) {
         this.jabatanPegawai = jabatanPegawai;
     }
@@ -132,5 +137,11 @@ public class PegawaiModel implements Serializable {
         }
 
         return result;
+    }
+
+    public int getUmur(){
+        long ageInMillis = new java.util.Date().getTime() - getTanggalLahir().getTime();
+        java.util.Date age = new java.util.Date(ageInMillis);
+        return age.getYear();
     }
 }

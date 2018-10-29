@@ -15,18 +15,6 @@ public class JabatanPegawaiModel implements Serializable {
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private long id;
 
-    /*@OneToMany
-    @JoinColumn(name = "pegawai_id", referencedColumnName = "id", nullable = false)
-    @OnDelete(action = OnDeleteAction.NO_ACTION)
-    @JsonIgnore
-    private long idPegawai;
-
-    @OneToMany
-    @JoinColumn(name = "jabatan_id", referencedColumnName = "id", nullable = false)
-    @OnDelete(action = OnDeleteAction.NO_ACTION)
-    @JsonIgnore
-    private long idJabatan;
-*/
     public long getId() {
         return id;
     }
@@ -34,20 +22,4 @@ public class JabatanPegawaiModel implements Serializable {
     public void setId(long id) {
         this.id = id;
     }
-
-    /*public long getIdPegawai() {
-        return idPegawai;
-    }
-
-    public void setIdPegawai(long idPegawai) {
-        this.idPegawai = idPegawai;
-    }
-
-    public long getIdJabatan() {
-        return idJabatan;
-    }
-
-    public void setIdJabatan(long idJabatan) {
-        this.idJabatan = idJabatan;
-    }*/
 }
