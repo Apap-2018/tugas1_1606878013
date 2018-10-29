@@ -3,24 +3,90 @@
 
     <head>
         <title> Add Pegawai </title>
+        <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+        <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+        <object th:include="fragments/fragment :: style" th:remove="tag"></object>
     </head>
 
     <body>
-        <form th:action = "@{/pegawai/tambah/submit}" method="get">
+        <nav th:replace = "fragments/fragment :: navbar"></nav>
+        <div class="container">
+            <h4 class = "title">Tambah Pegawai</h4>
+            <hr/>
+
+            <div class="row" style="margin: 30px; padding: 12px" >
+                <div class="col-lg-4"></div>
+                <div class="col-lg-8">
+                    <form th:action = "@{/pegawai/tambah}" th:object="${pegawai}" method="POST">
+                        <input type="hidden" name="nip" th:value="1234">
+                        <div class = "input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" style="width: 150px;">Nama</span>
+                            </div>
+                            <input type="text" name="nama" style="width: 300px;">
+                        </div>
+                        <div class = "input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" style="width: 150px;">Tempat Lahir</span>
+                            </div>
+                            <input type="text" name="tempatLahir" style="width: 300px;">
+                        </div>
+                        <div class = "input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" style="width: 150px;">Tanggal Lahir</span>
+                            </div>
+                            <input type="date" name="tanggalLahir" style="width: 300px;">
+                        </div>
+                        <div class = "input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" style="width: 150px;">Tahun Masuk</span>
+                            </div>
+                            <input type="text" name="tahunMasuk" style="width: 300px;">
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" style="width: 150px;">Provinsi</span>
+                            </div>
+                            <select th:name = "provinsi" style="width: 300px;" id="provinsi">
+                                <option th:each = "provinsi: ${allProvinsi}" th:value = "${provinsi.id}" th:text="${provinsi.nama}"></option>
+                            </select>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" style="width: 150px;">Instansi</span>
+                            </div>
+                            <select id="instansi" th:name = "instansi" style="width: 300px;">
+                                <option th:each = "instansi: ${allInstansi}" th:value = "${instansi.id}" th:text="${instansi.nama}"></option>
+                            </select>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" style="width: 150px;">Jabatan</span>
+                            </div>
+                            <select id="jabatan" th:name = "jabatanPegawai" th:field="*{jabatanPegawai[0]}" style="width: 300px;">
+                                <option th:each = "jabatan: ${allJabatan}"  th:value = "${jabatan.id}" th:text="${jabatan.nama}"></option>
+                            </select>
+                        </div>
+                        <button class="btn btn-primary" type="submit">Simpan</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--<form th:action = "@{/pegawai/tambah/submit}" method="get">
             Nama : <br/>
             <input type="text" name="nama"/>
             <br/>
             Tempat Lahir : <br/>
-            <input type="text" name="tempat_lahir"/>
+            <input type="text" name="tempatLahir"/>
             <br/>
             Tanggal Lahir : <br/>
-            <input type="date" name="tanggal_lahir"/>
+            <input type="date" name="tanggalLahir"/>
             <br/>
             Tahun Masuk : <br/>
-            <input type="text" name="tahun_masuk"/>
-            <br/>
+            <input type="text" name="tahunMasuk"/>
+            <br/>-->
 
-            <div>
+           <!-- <div>
                 <select th:name = "provinsi" th:onblur="'selectInstansi(this.value)'">
                     <option th:each = "provinsi : ${allProvinsi}" th:value="${provinsi.id}" th:text="${provinsi.nama}"></option>
                 </select>
@@ -34,17 +100,17 @@
 
             <select name = "jabatan" id="jabatan">
                 <option th:each = "jabatan : ${allJabatan}" th:value = "${jabatan.id}" th:text = "${jabatan.nama}"></option>
-            </select>
+            </select>-->
 
-            <button type="submit">Simpan</button>
-        </form>
+            <!--<button type="submit">Simpan</button>
+        </form>-->
     </body>
 
     <!--<script type="text/javascript" th:inline = "javascript">
         var allProvinsi = [[${allProvinsi}]];
         var allInstansi = [[${allInstansi}]];
 
-        function selectInstansi(idProvinsi) {
+        function filterInstansi(idProvinsi) {
             var result = '';
             for (var i in allInstansi) {
                 var id = allInstansi[i].getId();
@@ -53,7 +119,11 @@
                     result += '<option th:value =' + id + 'th:text =' + name + '> </option>'
                 }
             }
-            document.getElementById("idInstansi").innerHTML = result;
+            return document.getElementById("instansi").innerHTML = result;
+        }
+
+        function test(idProvinsi){
+            print(allProvinsi[idProvinsi].getId());
         }
     </script>-->
 </html>
